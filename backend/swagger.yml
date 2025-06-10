@@ -1,0 +1,915 @@
+openapi: "3.0.0"
+info:
+  title: "API Example"
+  version: "1.0.0"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT # Opcional, describe el formato del token si es relevante.
+
+paths:
+  /api/auth:
+    post:
+      tags:
+        - "auth"
+      summary: "Autenticar usuario"
+      description: "Permite a un usuario autenticarse utilizando su correo electrónico y contraseña. Devuelve un token JWT si las credenciales son válidas."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "cris.gallardos@gmail.com"
+                  description: "El correo electrónico del usuario registrado."
+                password:
+                  type: string
+                  format: password
+                  example: "cg9053"
+                  description: "La contraseña asociada a la cuenta del usuario."
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    description: "El token JWT generado para el usuario autenticado."
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "El correo electrónico es obligatorio."
+        401:
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "La contraseña es incorrecta."
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "El email no se encuentra registrado"
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Se produjo un error inesperado."
+
+  /api/auth/register:
+    post:
+      tags:
+        - "auth"
+      summary: "Registrar un nuevo usuario"
+      description: "Registra un nuevo usuario con correo electrónico, contraseña y rol. Devuelve un token tras un registro exitoso."
+      security:
+        - bearerAuth: [] # Requires authentication for certain roles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "cris.gallardos@gmail.com"
+                  description: "La dirección de correo electrónico del usuario."
+                password:
+                  type: string
+                  format: password
+                  example: "cg9053"
+                  description: "La contraseña de la cuenta de usuario."
+                role:
+                  type: string
+                  example: "admin"
+                  description: "El rol del usuario. Los roles permitidos están definidos por el sistema."
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    description: "El token JWT para el usuario registrado."
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "El correo electrónico es obligatorio."
+        403:
+          description: "Forbidden"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "El rol no es válido."
+        409:
+          description: "Conflict"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "El email ya está registrado"
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Se produjo un error inesperado"
+
+  /api/users:
+    get:
+      tags:
+        - "users"
+      summary: "Obtener todos los usuarios"
+      description: "Obtiene una lista de todos los usuarios registrados."
+      security:
+        - bearerAuth: [] # Requires authentication for certain roles
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: "El ID único del usuario."
+                    email:
+                      type: string
+                      description: "El correo electrónico del usuario."
+                    role:
+                      type: string
+                      description: "El rol del usuario."
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No se encontraron usuarios registrados."
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Se produjo un error inesperado."
+
+  /api/users/{id}:
+    get:
+      tags:
+        - "users"
+      summary: "Obtener un usuario por ID"
+      description: "Obtiene los detalles de un usuario específico por su ID."
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: "El ID del usuario."
+          schema:
+            type: string
+      security:
+        - bearerAuth: [] # Requires authentication for certain roles
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: "El ID único del usuario."
+                  email:
+                    type: string
+                    description: "El correo electrónico del usuario."
+                  role:
+                    type: string
+                    description: "El rol del usuario."
+        404:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "El ID de usuario no es válido."
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Se produjo un error inesperado."
+
+    put:
+      tags:
+        - "users"
+      summary: "Actualizar usuario por ID"
+      description: "Actualiza los detalles de un usuario específico por su ID."
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: "El ID del usuario."
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "cris.gallardos@gmail.com"
+                  description: "El correo electrónico del usuario."
+                password:
+                  type: string
+                  format: password
+                  example: "nuevo_password"
+                  description: "La nueva contraseña del usuario."
+                role:
+                  type: string
+                  example: "admin"
+                  description: "El nuevo rol del usuario."
+      security:
+        - bearerAuth: [] # Requires authentication for certain roles
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: "El ID único del usuario."
+                  email:
+                    type: string
+                    description: "El correo electrónico del usuario."
+                  role:
+                    type: string
+                    description: "El rol del usuario."
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No se pudo actualizar el usuario: ID inválido."
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "El usuario no existe."
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Se produjo un error inesperado."
+
+    delete:
+      tags:
+        - "users"
+      summary: "Eliminar usuario por ID"
+      description: "Elimina un usuario específico por su ID."
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: "El ID del usuario."
+          schema:
+            type: string
+      security:
+        - bearerAuth: [] # Requires authentication for certain roles
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: "El ID único del usuario eliminado."
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No se encontró el usuario para eliminar."
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Se produjo un error inesperado."
+
+  /api/students:
+    get:
+      tags:
+        - "students"
+      summary: "Obtener todos los estudiantes"
+      description: "Obtiene una lista de todos los estudiantes registrados."
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: "El nombre del estudiante."
+                    lastname:
+                      type: string
+                      description: "El apellido del estudiante."
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No se encontraron estudiantes registrados."
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Se produjo un error inesperado."
+
+    post:
+      tags:
+        - "students"
+      summary: "Crear un nuevo estudiante"
+      description: "Registra un nuevo estudiante con los datos proporcionados."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Carlos"
+                  description: "El nombre del estudiante."
+                lastname:
+                  type: string
+                  example: "Pérez"
+                  description: "El apellido del estudiante."
+                email:
+                  type: string
+                  format: email
+                  example: "carlos.perez@gmail.com"
+                  description: "El correo electrónico del estudiante."
+                rut:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "El RUT del estudiante (si aplica)."
+                birthdate:
+                  type: string
+                  format: date
+                  nullable: true
+                  example: null
+                  description: "La fecha de nacimiento del estudiante."
+                sex:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "El sexo del estudiante."
+                address:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "La dirección del estudiante."
+                nationality:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "La nacionalidad del estudiante."
+                source:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Fuente de información del estudiante."
+                contact:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Información de contacto adicional."
+                phone:
+                  type: string
+                  example: "123456789"
+                  description: "El número de teléfono del estudiante."
+                contactdate:
+                  type: string
+                  format: date-time
+                  nullable: true
+                  example: null
+                  description: "Fecha de contacto."
+                call1:
+                  type: object
+                  properties:
+                    comment:
+                      type: string
+                      nullable: true
+                      example: null
+                      description: "Comentario sobre la llamada 1."
+                    completed:
+                      type: boolean
+                      example: false
+                      description: "Indica si la llamada 1 fue completada."
+                call2:
+                  type: object
+                  properties:
+                    comment:
+                      type: string
+                      nullable: true
+                      example: null
+                      description: "Comentario sobre la llamada 2."
+                    completed:
+                      type: boolean
+                      example: false
+                      description: "Indica si la llamada 2 fue completada."
+                call3:
+                  type: object
+                  properties:
+                    comment:
+                      type: string
+                      nullable: true
+                      example: null
+                      description: "Comentario sobre la llamada 3."
+                    completed:
+                      type: boolean
+                      example: false
+                      description: "Indica si la llamada 3 fue completada."
+                positivefeedback:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Comentarios sobre la retroalimentación positiva."
+                linkdni:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Enlace al DNI del estudiante."
+                school:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Escuela del estudiante."
+                course:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Curso que cursa el estudiante."
+                communicationpreference:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Preferencia de comunicación del estudiante."
+                createdat:
+                  type: string
+                  format: date-time
+                  example: "2024-12-13T14:32:05.567Z"
+                  description: "Fecha de creación del registro del estudiante."
+      security:
+        - bearerAuth: []
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: "El ID único del estudiante creado."
+                  name:
+                    type: string
+                    description: "El nombre del estudiante creado."
+                  lastname:
+                    type: string
+                    description: "El apellido del estudiante creado."
+                  phone:
+                    type: string
+                    description: "El teléfono del estudiante creado."  
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Datos inválidos para crear el estudiante."
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Se produjo un error inesperado."
+
+  /api/students/{id}:
+    get:
+      tags:
+        - "students"
+      summary: "Obtener un estudiante por ID"
+      description: "Obtiene los detalles de un estudiante específico por su ID."
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: "El ID del estudiante."
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: "El ID único del estudiante."
+                  name:
+                    type: string
+                    description: "El nombre del estudiante."
+                  lastname:
+                    type: string
+                    description: "El apellido del estudiante."
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "El estudiante no existe."
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Se produjo un error inesperado."
+
+    put:
+      tags:
+        - "students"
+      summary: "Actualizar estudiante por ID"
+      description: "Actualiza los detalles de un estudiante específico por su ID."
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: "El ID del estudiante."
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Carlos"
+                  description: "El nombre del estudiante."
+                lastname:
+                  type: string
+                  example: "Pérez"
+                  description: "El apellido del estudiante."
+                email:
+                  type: string
+                  format: email
+                  example: "carlos.perez@gmail.com"
+                  description: "El correo electrónico del estudiante."
+                rut:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "El RUT del estudiante (si aplica)."
+                birthdate:
+                  type: string
+                  format: date
+                  nullable: true
+                  example: null
+                  description: "La fecha de nacimiento del estudiante."
+                sex:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "El sexo del estudiante."
+                address:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "La dirección del estudiante."
+                nationality:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "La nacionalidad del estudiante."
+                source:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Fuente de información del estudiante."
+                contact:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Información de contacto adicional."
+                phone:
+                  type: string
+                  example: "123456789"
+                  description: "El número de teléfono del estudiante."
+                contactdate:
+                  type: string
+                  format: date-time
+                  nullable: true
+                  example: null
+                  description: "Fecha de contacto."
+                call1:
+                  type: object
+                  properties:
+                    comment:
+                      type: string
+                      nullable: true
+                      example: null
+                      description: "Comentario sobre la llamada 1."
+                    completed:
+                      type: boolean
+                      example: false
+                      description: "Indica si la llamada 1 fue completada."
+                call2:
+                  type: object
+                  properties:
+                    comment:
+                      type: string
+                      nullable: true
+                      example: null
+                      description: "Comentario sobre la llamada 2."
+                    completed:
+                      type: boolean
+                      example: false
+                      description: "Indica si la llamada 2 fue completada."
+                call3:
+                  type: object
+                  properties:
+                    comment:
+                      type: string
+                      nullable: true
+                      example: null
+                      description: "Comentario sobre la llamada 3."
+                    completed:
+                      type: boolean
+                      example: false
+                      description: "Indica si la llamada 3 fue completada."
+                positivefeedback:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Comentarios sobre la retroalimentación positiva."
+                linkdni:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Enlace al DNI del estudiante."
+                school:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Escuela del estudiante."
+                course:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Curso que cursa el estudiante."
+                communicationpreference:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: "Preferencia de comunicación del estudiante."
+                createdat:
+                  type: string
+                  format: date-time
+                  example: "2024-12-13T14:32:05.567Z"
+                  description: "Fecha de creación del registro del estudiante."
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: "Estudiante actualizado"
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Datos inválidos para actualizar el estudiante."
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "El estudiante no existe."
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Se produjo un error inesperado."
+
+    delete:
+      tags:
+        - "students"
+      summary: "Eliminar estudiante por ID"
+      description: "Elimina un estudiante específico por su ID."
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: "El ID del estudiante."
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: "El ID único del estudiante eliminado."
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "El estudiante no se encuentra registrado."
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Se produjo un error inesperado."

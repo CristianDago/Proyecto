@@ -1,0 +1,57 @@
+@use "../../assets/styles/variables/variables.module.scss" as vars;
+
+.chat {
+  background-color: #f0efef;
+  padding: 50px;
+  border-radius: 50px;
+}
+
+.rightChat {
+  background-color: #e7ebee;
+}
+
+.chatMessages {
+  height: 300px; /* O la altura que prefieras */
+  max-height: 300px;
+  overflow-y: auto;
+  /* Opcional: para visualizar el contenedor */
+  padding: 10px;
+}
+
+.botonChat {
+  background: vars.$white;
+  color: vars.$text-color;
+  padding: 20px;
+  border: none; /* Elimina todos los bordes */
+  border: 1px solid #f0efef; /* Agrega el borde superior */
+  margin: -1px 0; /* Ajusta el margen para evitar la superposición */
+  border-radius: 0px;
+  text-align: left;
+  &:hover {
+    background: #f5f5f5;
+  }
+}
+
+.title {
+  padding: 20px;
+  background-color: vars.$primary-color;
+  color: vars.$white;
+  text-transform: uppercase;
+}
+
+.icons {
+  font-size: 20px;
+  margin-right: 10px;
+  color: vars.$primary-color;
+}
+
+.titleChat {
+  padding: 20px;
+  background-color: vars.$primary-color;
+  color: vars.$white;
+  text-transform: uppercase;
+}
+
+.inputContainer {
+  padding: 20px;
+}

@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo", // Archivo de caché incremental
+    "target": "ES2022", // Soporte para sintaxis moderna de JavaScript
+    "lib": ["ES2023"], // APIs modernas de JavaScript
+    "module": "ESNext", // Soporte para módulos modernos (ESM)
+    "skipLibCheck": true, // Ignora chequeos de tipado en las definiciones de tipo de las dependencias
+
+    /* Bundler mode */
+    "moduleResolution": "bundler", // Resolución de módulos optimizada para bundlers como Vite
+    "allowImportingTsExtensions": true, // Permite importar archivos con extensiones .ts/.tsx
+    "isolatedModules": true, // Asegura que cada archivo sea tratado como un módulo independiente
+    "moduleDetection": "force", // Detecta módulos explícitamente
+    "noEmit": true, // Evita la generación de archivos .js/.jsx
+
+    /* Linting */
+    "strict": true, // Activa todas las comprobaciones estrictas
+    "noUnusedLocals": true, // Detecta variables no utilizadas
+    "noUnusedParameters": true, // Detecta parámetros no utilizados
+    "noFallthroughCasesInSwitch": true, // Evita errores en casos de switch
+
+    /* Incremental Build */
+    "incremental": true // Habilita la compilación incremental
+  },
+  "include": ["vite.config.ts"], // Incluye únicamente el archivo de configuración de Vite
+  "exclude": ["node_modules", "dist"] // Excluye carpetas innecesarias
+}

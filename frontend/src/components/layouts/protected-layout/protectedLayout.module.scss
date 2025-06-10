@@ -1,0 +1,30 @@
+@use "../../../assets/styles/variables/variables.module.scss" as vars;
+
+.layoutContainer {
+  display: flex;
+  height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+
+  margin-left: 25%;
+  @media (max-width: 768px) {
+    margin-left: 0; // En móviles, el contenido ocupa toda la pantalla
+  }
+}
+
+.mainBackground {
+  background: vars.$white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .layoutContainer {
+    display: block;
+  }
+}

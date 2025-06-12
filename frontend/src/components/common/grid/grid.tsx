@@ -1,4 +1,4 @@
-import GridProps from "../../../interface/common/gridProps";
+import GridProps from "../../../interface/common/grid.props";
 
 export const Grid: React.FC<GridProps> = ({
   children,

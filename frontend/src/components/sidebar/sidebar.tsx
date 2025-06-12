@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
-import { useAuth } from "../auth/authContext";
+import { useAuth } from "../auth/auth.context";
 import { useNavigate } from "react-router-dom";
-import css from "./sidebar.module.scss";
+import css from "../../assets/styles/components/sidebar.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faBars,

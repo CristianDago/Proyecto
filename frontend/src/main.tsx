@@ -2,9 +2,9 @@
 import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
-import { router } from "./routes/appRoutes";
+import { router } from "./routes/app.routes";
 import { ToastContainer } from "react-toastify";
-import { AuthProvider } from "./components/auth/authContext";
+import { AuthProvider } from "./components/auth/auth.context";
 import "react-toastify/dist/ReactToastify.css";
 import "./assets/styles/global.scss";
 

@@ -1,0 +1,18 @@
+@use "../config/mixins.module.scss" as mixins;
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.grid-columns-2 {
+  @include mixins.responsive-grid(1fr, 1fr 1fr, 1fr 1fr);
+}
+
+.grid-columns-3 {
+  @include mixins.responsive-grid(1fr, 1fr, 1fr 1fr 1fr);
+}
+
+.grid-columns-4 {
+  @include mixins.responsive-grid(1fr, 1fr 1fr, 1fr 1fr 1fr 1fr);
+}

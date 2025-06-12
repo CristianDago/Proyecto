@@ -1,3 +1,4 @@
+import React from "react";
 import GridProps from "../../../interface/common/grid.props";
 
 export const Grid: React.FC<GridProps> = ({
@@ -13,3 +14,5 @@ export const Grid: React.FC<GridProps> = ({
     </div>
   );
 };
+
+export default Grid;

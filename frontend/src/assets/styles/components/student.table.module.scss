@@ -1,9 +1,10 @@
+@use "sass:math";
 @use "../config/variables.module.scss" as vars;
 
 .pagination button {
   width: vars.$spacing-unit * 3.75;
-  padding: vars.$spacing-unit / 1.6;
-  margin: vars.$spacing-unit / 1.6;
+  padding: math.div(vars.$spacing-unit, 1.6);
+  margin: math.div(vars.$spacing-unit, 1.6);
   border-radius: 100%;
 }
 
@@ -13,6 +14,7 @@
 
 .studentTableContainer {
   width: 100%;
-  overflow-x: auto;
+  max-height: 400px;
+  overflow: auto;
   margin-bottom: vars.$spacing-unit * 2.5;
 }

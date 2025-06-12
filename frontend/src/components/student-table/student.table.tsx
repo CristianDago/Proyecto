@@ -1,15 +1,14 @@
-// src/components/student-table/student.table.tsx
-import React, { useState, useMemo } from "react"; // Asegúrate de importar useMemo
+import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import css from "../../assets/styles/components/student.table.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleRight, faCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { StudentTableProps } from "../../interface/common/statistics";
+import Constants from "../../utils/constants";
 
 export const StudentTable: React.FC<StudentTableProps> = ({
-  students, // ¡Estos estudiantes ya vienen filtrados por colegio/curso!
+  students,
   title,
-  // filterBySchoolAndCourse ya NO es una prop aquí
   viewProfilePath,
 }) => {
   const navigate = useNavigate();
@@ -36,7 +35,6 @@ export const StudentTable: React.FC<StudentTableProps> = ({
     return colors[positiveFeedback] || "#FFFFFF";
   };
 
-  // Aplica los filtros locales (RUT y Feedback) usando useMemo para optimización
   const memoizedFilteredStudents = useMemo(() => {
     return students.filter((student) => {
       return (
@@ -44,7 +42,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
         (filterFeedback === "" || student.positiveFeedback === filterFeedback)
       );
     });
-  }, [students, searchRut, filterFeedback]); // Se recalcula solo si estas dependencias cambian
+  }, [students, searchRut, filterFeedback]);
 
   const totalPages = Math.max(
     1,
@@ -75,22 +73,24 @@ export const StudentTable: React.FC<StudentTableProps> = ({
           value={searchRut}
           onChange={(e) => {
             setSearchRut(e.target.value);
-            setCurrentPage(1); // Resetear página al buscar
+            setCurrentPage(1);
           }}
         />
         <select
           value={filterFeedback}
           onChange={(e) => {
             setFilterFeedback(e.target.value);
-            setCurrentPage(1); // Resetear página al filtrar
+            setCurrentPage(1);
           }}
         >
           <option value="">Todos los estados</option>
-          {Object.keys(colors).map((key) => (
-            <option key={key} value={key}>
-              {key}
-            </option>
-          ))}
+          {Constants.allFeedbacks
+            .filter((feedbackOption) => feedbackOption !== "")
+            .map((feedbackOption) => (
+              <option key={feedbackOption} value={feedbackOption}>
+                {feedbackOption}
+              </option>
+            ))}
         </select>
       </div>
 
@@ -108,7 +108,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
           <tbody>
             {currentStudents.length > 0 ? (
               currentStudents.map((student) => (
-                <tr key={student.id}>
+                <tr key={student.id || JSON.stringify(student)}>
                   <td>{student.name}</td>
                   <td>{student.lastname}</td>
                   <td>{student.rut}</td>

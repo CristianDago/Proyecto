@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import Cookies from "js-cookie";
 
 const TOKEN_COOKIE_NAME = "token";
-const TOKEN_EXPIRATION_DAYS = 1; // Configuración tiempo
+const TOKEN_EXPIRATION_DAYS = 1;
 
 export const useAuthStorage = () => {
   const [token, setToken] = useState<string | null>(() => {

@@ -1,16 +1,29 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import css from "../../sidebar/sidebar.module.scss";
-import { DropdownOption } from "../../../interface/sidebar/document.drop.down";
+import type { CSSProperties } from "react";
 
-const DropdownOptions: React.FC<{ options: DropdownOption[] }> = ({
+interface DropdownOption {
+  label: string;
+  path: string;
+}
+
+interface DropdownOptionsProps {
+  options: DropdownOption[];
+  className?: string;
+  style?: CSSProperties;
+}
+
+const DropdownOptions: React.FC<DropdownOptionsProps> = ({
   options,
+  className,
+  style,
 }) => {
   const navigate = useNavigate();
+
   return (
-    <ul className={css.dropdownMenu}>
-      {options.map((option, index) => (
-        <li key={index} onClick={() => navigate(option.path)}>
+    <ul className={className} style={style}>
+      {options.map((option) => (
+        <li key={option.path} onClick={() => navigate(option.path)}>
           {option.label}
         </li>
       ))}

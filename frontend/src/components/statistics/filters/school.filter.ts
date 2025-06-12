@@ -1,7 +1,5 @@
-// src/components/statistics/SchoolFilter.tsx
 import { Student } from "../../../interface/student/student";
 import { SchoolFilterProps } from "../../../interface/common/statistics";
-
 
 export const SchoolFilter = ({
   students,

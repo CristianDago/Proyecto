@@ -1,5 +1,11 @@
-// src/components/auth/authContext.tsx
-import { useContext, createContext, useState, useEffect, useMemo, useCallback } from "react";
+import {
+  useContext,
+  createContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import { useAuthStorage } from "./auth.storage";
 import { useDecodeToken } from "../../hooks/use.decode.token";
 import AuthProviderProps from "../../interface/auth/auth.provider.props";
@@ -19,30 +25,54 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const { token: storedToken, updateToken, clearToken } = useAuthStorage();
   const { userId, email, decodeToken } = useDecodeToken(storedToken);
-  const [isAuthenticated, setIsAuthenticated] = useState(!!storedToken);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
+  const [isLoginProcessLoading, setIsLoginProcessLoading] = useState(false);
 
   useEffect(() => {
-    setIsAuthenticated(!!storedToken);
-  }, [storedToken]);
+    setIsInitialLoading(true);
+    setLoginError(null);
+
+    if (storedToken) {
+      const decoded = decodeToken(storedToken);
+      if (decoded) {
+        setIsAuthenticated(true);
+      } else {
+        clearToken();
+        setIsAuthenticated(false);
+      }
+    } else {
+      setIsAuthenticated(false);
+    }
+    setIsInitialLoading(false);
+  }, [storedToken, decodeToken, clearToken]);
 
   const login = useCallback(
     async (newToken: string) => {
-      setIsLoading(true);
+      setIsLoginProcessLoading(true);
       setLoginError(null);
       try {
-        decodeToken(newToken); // Decodifica el token
-        await updateToken(newToken); // Guarda el token
-        setIsAuthenticated(true); // Actualiza el estado de autenticación
-      } catch (error) {
-        console.error("Error al iniciar sesión:", error);
+        const decoded = decodeToken(newToken);
+        if (!decoded) {
+          clearToken();
+          setIsAuthenticated(false);
+          const errorMessage =
+            "El token recibido es inválido o corrupto. Por favor, intente iniciar sesión nuevamente.";
+          setLoginError(errorMessage);
+          throw new Error(errorMessage);
+        }
+        await updateToken(newToken);
+        setIsAuthenticated(true);
+      } catch (error: any) {
+        console.error("Error al iniciar sesión en el AuthProvider:", error);
         clearToken();
         setIsAuthenticated(false);
-        setLoginError("Credenciales inválidas o token corrupto.");
+        setLoginError(error.message || "Error al procesar el token de sesión.");
         throw error;
       } finally {
-        setIsLoading(false);
+        setIsLoginProcessLoading(false);
       }
     },
     [updateToken, clearToken, decodeToken, setIsAuthenticated]
@@ -60,7 +90,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       userId,
       email,
       isAuthenticated,
-      isLoading,
+      isLoading: isInitialLoading || isLoginProcessLoading,
       login,
       logout,
       loginError,
@@ -70,7 +100,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       userId,
       email,
       isAuthenticated,
-      isLoading,
+      isInitialLoading,
+      isLoginProcessLoading,
       login,
       logout,
       loginError,

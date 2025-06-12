@@ -2,6 +2,7 @@
 @use "../styles/base/reset.module.scss";
 @use "../styles/config/variables.module.scss" as vars;
 @use "../styles/layout/grid.module.scss" as grid;
+@use "../styles/components/_loading-spinner.scss";
 
 body {
   background-color: vars.$grey;

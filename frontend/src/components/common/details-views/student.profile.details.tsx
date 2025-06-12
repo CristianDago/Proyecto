@@ -40,7 +40,6 @@ const StudentDetails = ({ student, onEdit, onDelete }: StudentDetailsProps) => {
         </a>
       );
     } else {
-
       return (
         <button disabled className={css.disabledButton}>
           <FontAwesomeIcon icon={faFile} /> {label}

@@ -1,7 +1,5 @@
-// src/features/login/login.form.tsx
 import { useState } from "react";
-import { InputField } from "../../components/common/input-field/Input.field";
-
+import FormInput from "../../components/common/forms/form.input";
 import css from "../../assets/styles/layout/login.form.module.scss";
 import LoginFormProps from "../../interface/login/login.form.props";
 import logo from "../../assets/images/LOGO-escuelas.png";
@@ -25,20 +23,26 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <h2>Inicio de sesión</h2>
       </div>
 
-      <InputField
+      <FormInput
         id="email"
         label="Email"
+        name="email"
         type="email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(
+          e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        ) => setEmail(e.target.value)}
       />
 
-      <InputField
+      <FormInput
         id="password"
         label="Contraseña"
+        name="password"
         type="password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(
+          e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        ) => setPassword(e.target.value)}
       />
 
       <button className={css.loginButton} disabled={isLoading}>

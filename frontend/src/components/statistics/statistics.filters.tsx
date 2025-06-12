@@ -7,12 +7,14 @@ import {
   FilteredStatistics,
 } from "../../interface/common/statistics";
 
+import Constants from "../../utils/constants";
+
 const schoolMap: Record<School, string> = {
   [School.Quinta]: "QUINTA NORMAL",
   [School.Buin]: "BUÍN",
   [School.Granja]: "LA GRANJA",
   [School.Nunoa]: "ÑUÑOA",
-  [School.Pudahuel]: "PUDAHUEL",
+  [School.Pudahuel]: "PUDAHUDEL",
   [School.Miguel]: "SAN MIGUEL",
 };
 
@@ -32,12 +34,10 @@ export const calculateStatistics = ({
 }: StatisticsFiltersProps): FilteredStatistics => {
   let filteredStudents = students;
 
-  // Primero obtenemos los estados únicos de feedback sin aplicar ningún filtro
   const uniqueFeedbacks = Array.from(
     new Set(students.map((s) => s.positiveFeedback || "AÚN SIN RESPUESTAS"))
   );
 
-  // Luego filtramos los estudiantes por fuente, escuela y curso solo si los parámetros están definidos
   if (source) {
     filteredStudents = SourceFilter({ students: filteredStudents, source });
   }
@@ -54,7 +54,6 @@ export const calculateStatistics = ({
 
   const studentsByGeneralState: { estado: string; cantidad: number }[] = [];
 
-  // Ahora que los estudiantes están filtrados, contamos la cantidad de estudiantes por cada feedback
   uniqueFeedbacks.forEach((feedback) => {
     studentsByGeneralState.push({
       estado: feedback,
@@ -84,23 +83,12 @@ export const calculateStatistics = ({
     (s) => !s.communicationPreference
   ).length;
 
-  // Modificar la función contactsByPerson para incluir los captadores sin respuesta
-  // src/components/statistics/statisticsFilters.tsx
-
-  const contactsByPerson = [
-    "Lorena",
-    "Arlette",
-    "María",
-    "Rowina",
-    "No Ingresa Captador",
-  ].map((person) => {
+  const contactsByPerson = Constants.CAPTATOR_NAMES.map((person) => {
     let studentCount = 0;
 
     if (person === "No Ingresa Captador") {
-      // Si el nombre es "No Ingresa Captador", contamos los estudiantes sin captador
       studentCount = filteredStudents.filter((s) => !s.contact).length;
     } else {
-      // De lo contrario, contamos los estudiantes asignados a ese captador
       studentCount = filteredStudents.filter(
         (s) => s.contact === person.toUpperCase()
       ).length;
@@ -176,6 +164,6 @@ export const calculateStatistics = ({
     studentsBySchoolCourseFeedback,
     genderCount,
     studentsByGeneralState,
-    studentsWithoutSchoolAndCourse, // Ahora esta propiedad tiene un valor
+    studentsWithoutSchoolAndCourse,
   };
 };

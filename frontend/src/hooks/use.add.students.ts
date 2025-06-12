@@ -53,7 +53,7 @@ export function useAddStudent(token: string | null | undefined) {
             zone: "America/Santiago",
           }).isValid
             ? DateTime.fromISO(value, { zone: "America/Santiago" }).toISODate()
-            : undefined; // Si no es válido, undefined
+            : undefined;
           return { ...prevData, [name]: formattedDate };
         } else if (value === "undefined") {
           return { ...prevData, [name]: undefined };

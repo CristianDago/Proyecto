@@ -3,11 +3,7 @@ import { useStudentsList } from "../hooks/use.students.list";
 import { calculateStatistics } from "../components/statistics/statistics.filters";
 import { Source, School, Course } from "../interface/student/student";
 import { Grid } from "../components/common/grid/grid";
-import css from "../assets/styles/layout/statistics.module.scss";
-import { allFeedbacks } from "../utils/constants";
-
 import { StatisticsFilterControls } from "../components/statistics/filters/statistics.filter.controls";
-
 import { GeneralStudentStatsSection } from "../components/statistics/sections/general.student.stats.section";
 import { CommunicationPreferenceSection } from "../components/statistics/sections/communication.preference.section";
 import { EnrollmentSourceSection } from "../components/statistics/sections/enrollment.source.section";
@@ -15,6 +11,8 @@ import { GenderDistributionSection } from "../components/statistics/sections/gen
 import { CaptatorsTableSection } from "../components/statistics/sections/captators.table.section";
 import { StudentsByLevelSection } from "../components/statistics/sections/students.by.level.section";
 import { FeedbackBySchoolCourseSection } from "../components/statistics/sections/feedback.by.school.course.section";
+
+import Constants from "../utils/constants";
 
 const Statistics = () => {
   const { students, error, loading } = useStudentsList();
@@ -57,10 +55,10 @@ const Statistics = () => {
         onFilterChange={handleFilterChange}
       />
 
-      <Grid className={css.modulos}>
+      <Grid className="modulos">
         <GeneralStudentStatsSection
           filteredStatistics={filteredStatistics}
-          allFeedbacks={allFeedbacks}
+          allFeedbacks={Constants.allFeedbacks}
         />
         <CommunicationPreferenceSection
           filteredStatistics={filteredStatistics}

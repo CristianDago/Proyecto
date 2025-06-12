@@ -1,4 +1,3 @@
-// src/components/statistics/StudentFilters.tsx
 import { StudentFiltersProps } from "../../../interface/common/statistics";
 
 import { Student } from "../../../interface/student/student";

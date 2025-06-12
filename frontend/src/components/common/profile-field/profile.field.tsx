@@ -1,8 +1,7 @@
-// components/common/profile-field/profile.field.tsx (o similar)
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import css from "../../../assets/styles/layout/student.profile.module.scss"; // Asume un CSS Module para este componente
+import css from "../../../assets/styles/layout/student.profile.module.scss";
 
 interface ProfileFieldProps {
   icon: IconDefinition;

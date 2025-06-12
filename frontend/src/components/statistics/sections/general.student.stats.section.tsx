@@ -1,32 +1,29 @@
-// src/components/statistics/sections/GeneralStudentStatsSection.tsx
-import React from 'react';
-import { Table } from '../layouts/table'; // Asume que la ruta es correcta
-import { FilteredStatistics } from '../../../interface/common/statistics'; // Importa la interfaz
+import React from "react";
+import { Table } from "../layouts/table";
+import { FilteredStatistics } from "../../../interface/common/statistics";
 
 interface GeneralStudentStatsSectionProps {
   filteredStatistics: FilteredStatistics;
-  allFeedbacks: string[]; // Recibe todos los feedbacks posibles para normalizar los datos
+  allFeedbacks: string[];
 }
 
-export const GeneralStudentStatsSection: React.FC<GeneralStudentStatsSectionProps> = React.memo(({
-  filteredStatistics,
-  allFeedbacks,
-}) => {
-  const tableData = allFeedbacks.map((feedback) => {
-    const count = filteredStatistics.studentsByGeneralState.find(
-      (item) => item.estado === feedback
-    )?.cantidad;
+export const GeneralStudentStatsSection: React.FC<GeneralStudentStatsSectionProps> =
+  React.memo(({ filteredStatistics, allFeedbacks }) => {
+    const tableData = allFeedbacks.map((feedback) => {
+      const count = filteredStatistics.studentsByGeneralState.find(
+        (item) => item.estado === feedback
+      )?.cantidad;
 
-    return {
-      Estado: feedback,
-      Estudiantes: count || 0,
-    };
+      return {
+        Estado: feedback,
+        Estudiantes: count || 0,
+      };
+    });
+
+    return (
+      <div className="modulos">
+        <h2>Estado general de los estudiantes</h2>
+        <Table data={tableData} columns={["Estado", "Estudiantes"]} />
+      </div>
+    );
   });
-
-  return (
-    <div className="modulos"> {/* Usaremos el className de css.modulos */}
-      <h2>Estado general de los estudiantes</h2>
-      <Table data={tableData} columns={["Estado", "Estudiantes"]} />
-    </div>
-  );
-});

@@ -1,21 +1,22 @@
-export default interface InputFieldProps {
-  id: string;
-  label: string;
-  type: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-export interface FormInputProps {
+interface FormInputProps {
   id?: string;
   name: string;
   label: string;
   type: string;
-  value?: string; // Hacerlo opcional para inputs tipo "file"
+
+  value?: string | number | readonly string[] | File | Date | undefined;
+
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
+
   required?: boolean;
-  options?: string[]; // Para selects
-  accept?: string; // Para input de tipo "file"
+  placeholder?: string;
+  className?: string;
+
+  options?: string[];
+
+  accept?: string;
 }
+
+export default FormInputProps;

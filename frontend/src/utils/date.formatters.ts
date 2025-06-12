@@ -7,7 +7,8 @@ export const formatDateForInput = (date: string | Date | undefined): string => {
   if (date instanceof Date) {
     return DateTime.fromJSDate(date).toFormat("yyyy-MM-dd");
   }
-  if (typeof date === "string" && DateTime.fromISO(date).isValid) { // Aquí no hace falta 'as string'
+  if (typeof date === "string" && DateTime.fromISO(date).isValid) {
+    // Aquí no hace falta 'as string'
     return DateTime.fromISO(date).toFormat("yyyy-MM-dd");
   }
   return "";

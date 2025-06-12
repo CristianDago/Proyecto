@@ -4,13 +4,12 @@ import { BarChartProps } from "../../../interface/common/statistics";
 
 export const BarChart: React.FC<BarChartProps> = ({ data, title }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartInstance = useRef<Chart | null>(null); // Guardar la instancia del gráfico
+  const chartInstance = useRef<Chart | null>(null);
 
   useEffect(() => {
     const ctx = chartRef.current?.getContext("2d");
     if (!ctx) return;
 
-    // Destruir la instancia anterior si existe
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
@@ -38,11 +37,10 @@ export const BarChart: React.FC<BarChartProps> = ({ data, title }) => {
       },
     });
 
-    // Función de limpieza para destruir el gráfico al desmontar el componente o al actualizar las props
     return () => {
       if (chartInstance.current) {
         chartInstance.current.destroy();
-        chartInstance.current = null; // Limpiar la referencia
+        chartInstance.current = null;
       }
     };
   }, [data, title]);

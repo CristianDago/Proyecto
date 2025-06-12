@@ -1,31 +1,48 @@
 import React from "react";
-import InputFieldProps from "../../../interface/common/input.field";
+import type FormInputProps from "../../../interface/common/input.field";
 
-interface Props extends InputFieldProps {
-  className?: string;
-  placeholder?: string;
-  required?: boolean;
-}
-
-export const InputField: React.FC<Props> = ({
+export const FormInput: React.FC<FormInputProps> = ({
   id,
   label,
+  name,
   type,
   value,
   onChange,
-  className,
   placeholder,
   required,
+  options,
+  accept,
 }) => (
-  <div className={className}>
-    <label htmlFor={id}>{label}</label>
-    <input
-      id={id}
-      type={type}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      required={required}
-    />
+  <div>
+    <label htmlFor={id || name}>{label}</label>
+    {type === "select" && options ? (
+      <select
+        id={id || name}
+        name={name}
+        value={String(value ?? "")}
+        onChange={onChange}
+        required={required}
+      >
+        <option value="">Seleccione una opción</option>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    ) : (
+      <input
+        id={id || name}
+        type={type}
+        name={name}
+        value={type !== "file" ? String(value ?? "") : undefined}
+        onChange={onChange}
+        placeholder={placeholder}
+        required={required}
+        accept={accept}
+      />
+    )}
   </div>
 );
+
+export default FormInput;

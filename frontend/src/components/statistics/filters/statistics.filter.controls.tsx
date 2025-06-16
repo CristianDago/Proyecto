@@ -1,17 +1,7 @@
 import React from "react";
-import { Source, School, Course } from "../../../interface/student/student";
+import { Source, School, Course } from "../../../interface/common/enums/enums";
 import Constants from "../../../utils/constants";
-
-interface StatisticsFilterControlsProps {
-  selectedSource: Source | null;
-  selectedSchool: School | null;
-  selectedCourse: Course | null;
-  onFilterChange: (filters: {
-    source?: Source | null;
-    school?: School | null;
-    course?: Course | null;
-  }) => void;
-}
+import { StatisticsFilterControlsProps } from "../../../interface/common/statistics/statistics.filter.control";
 
 export const StatisticsFilterControls: React.FC<
   StatisticsFilterControlsProps

@@ -1,4 +1,4 @@
-import { StudentFiltersProps } from "../../../interface/common/statistics";
+import { StudentFiltersProps } from "../../../interface/common/statistics/statistics";
 
 import { Student } from "../../../interface/student/student";
 import { SourceFilter } from "./source.filter";

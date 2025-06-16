@@ -1,10 +1,6 @@
 import React from "react";
 import { Table } from "../layouts/table";
-import { FilteredStatistics } from "../../../interface/common/statistics";
-
-interface CaptatorsTableSectionProps {
-  filteredStatistics: FilteredStatistics;
-}
+import { CaptatorsTableSectionProps } from "../../../interface/common/statistics/sections";
 
 export const CaptatorsTableSection: React.FC<CaptatorsTableSectionProps> =
   React.memo(({ filteredStatistics }) => {

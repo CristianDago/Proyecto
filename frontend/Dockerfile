@@ -1,13 +1,10 @@
-# Imagen base de Node.js
-FROM node:18
-# Establecer el directorio de trabajo en el contenedor
+FROM node:18-alpine AS builder
 WORKDIR /app
-# Copiar los archivos de configuración de la aplicación
 COPY package*.json ./
 RUN npm install
-# Copiar el resto de los archivos de la aplicación
 COPY . .
-# Exponer el puerto en el que la aplicación escuchará
-EXPOSE 3000
-# Comando para iniciar la aplicación
-CMD ["node", "app.js"]
+RUN npm run build
+FROM nginx:stable-alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

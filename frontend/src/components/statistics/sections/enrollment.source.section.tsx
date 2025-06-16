@@ -1,10 +1,6 @@
 import React from "react";
 import { BarChart } from "../layouts/bar.chart";
-import { FilteredStatistics } from "../../../interface/common/statistics";
-
-interface EnrollmentSourceSectionProps {
-  filteredStatistics: FilteredStatistics;
-}
+import { EnrollmentSourceSectionProps } from "../../../interface/common/statistics/sections";
 
 export const EnrollmentSourceSection: React.FC<EnrollmentSourceSectionProps> =
   React.memo(({ filteredStatistics }) => {

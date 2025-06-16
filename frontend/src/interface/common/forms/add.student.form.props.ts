@@ -1,5 +1,5 @@
 import React from "react";
-import { Student } from "./student";
+import { Student } from "../../student/student";
 
 export interface AddStudentFormProps {
   studentData: Student;

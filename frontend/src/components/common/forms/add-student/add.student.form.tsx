@@ -2,7 +2,7 @@ import React from "react";
 import FormInput from "../form.input";
 import css from "../../../../assets/styles/layout/student.profile.module.scss";
 import { formatDateForInput } from "../../../../utils/date.formatters";
-import { AddStudentFormProps } from "../../../../interface/student/add.student.form.props";
+import { AddStudentFormProps } from "../../../../interface/common/forms/add.student.form.props";
 import { FormSection } from "../form-section/form.section";
 import Constants from "../../../../utils/constants";
 

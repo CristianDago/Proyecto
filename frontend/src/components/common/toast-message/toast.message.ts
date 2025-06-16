@@ -1,10 +1,5 @@
 import { toast, ToastOptions } from "react-toastify";
-
-interface ToastMessageProps {
-  type: "success" | "error" | "warning" | "info";
-  message: string;
-  options?: ToastOptions;
-}
+import { ToastMessageProps } from "../../../interface/common/toast-message/toast-message";
 
 const defaultOptions: ToastOptions = {
   position: "top-right",

@@ -4,13 +4,14 @@ import { LoadingSpinner } from "../components/ui/loading.spinner";
 import { useProtectedRoute } from "../hooks/use.protected.route";
 
 export const ProtectedRoute = () => {
-  const isLoading = useProtectedRoute();
+  const isLoadingAuth = useProtectedRoute();
+  const { isAuthenticated } = useAuth();
 
-  if (isLoading) {
+  if (isLoadingAuth) {
     return <LoadingSpinner />;
   }
 
-  if (!useAuth().isAuthenticated) {
+  if (!isAuthenticated) {
     return null;
   }
 

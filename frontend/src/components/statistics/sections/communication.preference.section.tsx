@@ -1,10 +1,6 @@
 import React from "react";
 import { BarChart } from "../layouts/bar.chart";
-import { FilteredStatistics } from "../../../interface/common/statistics";
-
-interface CommunicationPreferenceSectionProps {
-  filteredStatistics: FilteredStatistics;
-}
+import { CommunicationPreferenceSectionProps } from "../../../interface/common/statistics/sections";
 
 export const CommunicationPreferenceSection: React.FC<CommunicationPreferenceSectionProps> =
   React.memo(({ filteredStatistics }) => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../components/auth/auth.context";
 import { fetchStudentsList } from "../utils/fetch.students";
-import { Student } from "../interface/student/student";
+import type { Student } from "../interface/student/student";
 
 export const useStudentsList = () => {
   const { token } = useAuth();
@@ -18,10 +18,17 @@ export const useStudentsList = () => {
       }
 
       try {
-        const data = await fetchStudentsList(token);
-        setStudents(data);
+        const data: Student[] = await fetchStudentsList(token);
+
+        const sortedData = [...data].sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return dateB - dateA;
+        });
+
+        setStudents(sortedData);
       } catch (err: any) {
-        setError(err.message || "Error desconocido");
+        setError(err.message || "Error desconocido al obtener estudiantes");
       } finally {
         setLoading(false);
       }

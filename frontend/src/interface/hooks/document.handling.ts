@@ -1,5 +1,4 @@
-// src/interface/hooks/documentHandling.ts
-import { Student } from "./student";
+import { Student } from "../student/student";
 
 export interface UseDocumentHandlingHookResult {
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

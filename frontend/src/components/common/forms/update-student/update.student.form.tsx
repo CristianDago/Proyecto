@@ -4,7 +4,7 @@ import FormInput from "../form.input";
 import css from "../../../../assets/styles/layout/student.profile.module.scss";
 import { formatDateForInput } from "../../../../utils/date.formatters";
 import { useDocumentHandling } from "../../../../hooks/use.document.handling";
-import type { StudentFormProps } from "../../../../interface/student/update.student.form.props";
+import type { StudentFormProps } from "../../../../interface/common/forms/update.student.form.props";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FormSection } from "../form-section/form.section";

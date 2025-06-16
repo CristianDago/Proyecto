@@ -3,7 +3,7 @@ import { Student } from "../interface/student/student";
 import {
   UseDocumentHandlingHookProps,
   UseDocumentHandlingHookResult,
-} from "../interface/student/document.handling";
+} from "../interface/hooks/document.handling";
 
 export const useDocumentHandling = ({
   onChange,

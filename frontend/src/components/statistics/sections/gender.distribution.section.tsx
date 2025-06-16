@@ -1,10 +1,6 @@
 import React from "react";
 import { BarChart } from "../layouts/bar.chart";
-import { FilteredStatistics } from "../../../interface/common/statistics";
-
-interface GenderDistributionSectionProps {
-  filteredStatistics: FilteredStatistics;
-}
+import { GenderDistributionSectionProps } from "../../../interface/common/statistics/sections";
 
 export const GenderDistributionSection: React.FC<GenderDistributionSectionProps> =
   React.memo(({ filteredStatistics }) => {

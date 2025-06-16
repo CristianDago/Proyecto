@@ -1,5 +1,5 @@
 import { Student } from "../../../interface/student/student";
-import { SchoolFilterProps } from "../../../interface/common/statistics";
+import { SchoolFilterProps } from "../../../interface/common/statistics/statistics";
 
 export const SchoolFilter = ({
   students,

@@ -1,13 +1,6 @@
 import React from "react";
 import { Grid } from "../../grid/grid";
-import type { ReactNode } from "react";
-
-interface FormSectionProps {
-  title: string;
-  gridClassName?: string;
-  children: ReactNode;
-  sectionCssClass?: string;
-}
+import { FormSectionProps } from "../../../../interface/common/forms/form.section";
 
 export const FormSection: React.FC<FormSectionProps> = ({
   title,

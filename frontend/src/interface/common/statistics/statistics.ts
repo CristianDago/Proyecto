@@ -1,7 +1,6 @@
-// src/common/statistics.ts
-// Importa las interfaces y enums necesarios directamente desde student.ts
-import { Student, Source, School, Course } from "../student/student";
-// Ya no necesitamos importar StudentList por separado si Student ahora incluye el ID
+// src/interface/common/statistics.ts
+import type { Student } from "../../student/student";
+import type { Source, School, Course } from "../enums/enums"; // Importa enums desde la nueva ubicación
 
 export interface StudentFiltersProps {
   students: Student[];
@@ -58,13 +57,7 @@ export interface FilteredStatistics {
   studentsWithoutSchoolAndCourse: number;
 }
 
-// Gráficos
 export interface BarChartProps {
-  data: { name: string; value: number }[];
-  title: string;
-}
-
-export interface PieChartProps {
   data: { name: string; value: number }[];
   title: string;
 }
@@ -75,10 +68,7 @@ export interface TableProps {
 }
 
 export interface StudentTableProps {
-  // Ahora espera Student[], que incluye el ID
   students: Student[];
   title: string;
-  // filterBySchoolAndCourse YA NO ES UNA PROP AQUÍ
-  // filterBySchoolAndCourse?: (student: StudentList) => boolean; // ¡ELIMINADO!
   viewProfilePath: string;
 }

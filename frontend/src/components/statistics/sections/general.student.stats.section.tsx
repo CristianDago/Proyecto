@@ -1,11 +1,6 @@
 import React from "react";
 import { Table } from "../layouts/table";
-import { FilteredStatistics } from "../../../interface/common/statistics";
-
-interface GeneralStudentStatsSectionProps {
-  filteredStatistics: FilteredStatistics;
-  allFeedbacks: string[];
-}
+import { GeneralStudentStatsSectionProps } from "../../../interface/common/statistics/sections";
 
 export const GeneralStudentStatsSection: React.FC<GeneralStudentStatsSectionProps> =
   React.memo(({ filteredStatistics, allFeedbacks }) => {

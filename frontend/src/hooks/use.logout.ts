@@ -1,9 +1,6 @@
 import { useCallback } from "react";
 import { useAuthStorage } from "../components/auth/auth.storage";
-
-interface UseLogoutResult {
-  logout: () => void;
-}
+import { UseLogoutResult } from "../interface/hooks/logout";
 
 export const useLogout = (): UseLogoutResult => {
   const { clearToken } = useAuthStorage();

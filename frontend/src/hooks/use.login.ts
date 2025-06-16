@@ -2,12 +2,7 @@ import { useState, useCallback } from "react";
 import { useAuthStorage } from "../components/auth/auth.storage";
 import { useDecodeToken } from "./use.decode.token";
 import * as Sentry from "@sentry/react";
-
-interface UseLoginResult {
-  isLoading: boolean;
-  loginError: string | null;
-  login: (newToken: string) => Promise<void>;
-}
+import { UseLoginResult } from "../interface/hooks/login";
 
 export const useLogin = (): UseLoginResult => {
   const { updateToken, clearToken } = useAuthStorage();

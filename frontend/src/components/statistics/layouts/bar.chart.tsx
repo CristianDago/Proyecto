@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
-import { BarChartProps } from "../../../interface/common/statistics";
+import { BarChartProps } from "../../../interface/common/statistics/statistics";
 
 export const BarChart: React.FC<BarChartProps> = ({ data, title }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);

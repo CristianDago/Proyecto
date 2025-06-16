@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { authService } from "../services/auth.service";
 import { HttpError } from "../utils/http.error.util";
 import { userLoginSchema, userRegisterSchema } from "../schemas/auth.schemas";
-const handleLogin = async (
-  req: Request, 
-  res: Response, 
-  next: NextFunction
-) => {
+const handleLogin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { error, value } = userLoginSchema.validate(req.body);
     if (error) {
@@ -20,8 +16,8 @@ const handleLogin = async (
   }
 };
 const handleRegister = async (
-  req: Request, 
-  res: Response, 
+  req: Request,
+  res: Response,
   next: NextFunction
 ) => {
   try {

@@ -1,7 +1,8 @@
-import { ReactNode } from "react";
+import type { ReactNode, HTMLAttributes } from "react";
 
-export default interface GridProps {
+export default interface GridProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
+
   justifyContent?:
     | "flex-start"
     | "center"
@@ -9,8 +10,8 @@ export default interface GridProps {
     | "space-between"
     | "space-around";
   alignItems?: "flex-start" | "center" | "flex-end" | "stretch";
+
   gap?: string;
   rows?: string;
-  columns?: string; // Custom columns via inline style
-  className?: string; // Allows for external CSS classes
+  columns?: number;
 }

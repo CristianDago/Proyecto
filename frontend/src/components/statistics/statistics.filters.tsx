@@ -1,11 +1,11 @@
-import { School, Course } from "../../interface/student/student";
+import { School, Course } from "../../interface/common/enums/enums"
 import { SourceFilter } from "./filters/source.filter";
 import { SchoolFilter } from "./filters/school.filter";
 import { CourseFilter } from "./filters/course.filter";
 import {
   StatisticsFiltersProps,
   FilteredStatistics,
-} from "../../interface/common/statistics";
+} from "../../interface/common/statistics/statistics";
 
 import Constants from "../../utils/constants";
 

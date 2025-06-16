@@ -1,17 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import type { CSSProperties } from "react";
-
-interface DropdownOption {
-  label: string;
-  path: string;
-}
-
-interface DropdownOptionsProps {
-  options: DropdownOption[];
-  className?: string;
-  style?: CSSProperties;
-}
+import { DropdownOptionsProps } from "../../../interface/common/dropdown-options/document.dropdown";
 
 const DropdownOptions: React.FC<DropdownOptionsProps> = ({
   options,

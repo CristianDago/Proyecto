@@ -1,9 +1,10 @@
 import { useMemo, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { Student, School, Course } from "../interface/student/student";
+import { School, Course } from "../interface/common/enums/enums";
+import { Student } from "../interface/student/student";
+import { UseSchoolClassReturn } from "../interface/hooks/school.class";
 
 const mapSchoolSlugToEnum = (slug: string): School | undefined => {
-  console.log(`Mapeando slug de colegio: '${slug}'`);
   switch (slug) {
     case "quinta-normal":
       return School.Quinta;
@@ -23,7 +24,6 @@ const mapSchoolSlugToEnum = (slug: string): School | undefined => {
 };
 
 const mapCourseSlugToEnum = (slug: string): Course | undefined => {
-  console.log(`Mapeando slug de curso: '${slug}'`);
   switch (slug) {
     case "1nb":
       return Course.NB1;
@@ -39,12 +39,6 @@ const mapCourseSlugToEnum = (slug: string): Course | undefined => {
       return undefined;
   }
 };
-
-interface UseSchoolClassReturn {
-  normalizedSchool: string;
-  normalizedCourse: string;
-  getFilteredStudentsBySchoolAndCourse: (allStudents: Student[]) => Student[];
-}
 
 export function useSchoolClass(): UseSchoolClassReturn {
   const { school, course } = useParams<{ school: string; course: string }>();

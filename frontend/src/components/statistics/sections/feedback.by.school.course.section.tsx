@@ -1,11 +1,7 @@
 import React from "react";
 import { Table } from "../layouts/table";
-import type { FilteredStatistics } from "../../../interface/common/statistics";
 import Constants from "../../../utils/constants";
-
-interface FeedbackBySchoolCourseSectionProps {
-  filteredStatistics: FilteredStatistics;
-}
+import { FeedbackBySchoolCourseSectionProps } from "../../../interface/common/statistics/sections";
 
 export const FeedbackBySchoolCourseSection: React.FC<FeedbackBySchoolCourseSectionProps> =
   React.memo(({ filteredStatistics }) => {

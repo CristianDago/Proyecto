@@ -1,5 +1,5 @@
 import React from "react";
-import { TableProps } from "../../../interface/common/statistics";
+import { TableProps } from "../../../interface/common/statistics/statistics";
 
 export const Table: React.FC<TableProps> = ({ data, columns }) => {
   return (

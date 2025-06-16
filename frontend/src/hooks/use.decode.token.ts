@@ -1,19 +1,10 @@
 import { useState, useEffect } from "react";
-import { jwtDecode, JwtPayload } from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import * as Sentry from "@sentry/react";
-
-interface DecodedToken extends JwtPayload {
-  uid?: string;
-  email?: string;
-  exp?: number;
-}
-
-interface UseDecodeTokenResult {
-  userId: string | null;
-  email: string | null;
-  error: string | null;
-  decodeToken: (token: string | null) => DecodedToken | null;
-}
+import {
+  DecodedToken,
+  UseDecodeTokenResult,
+} from "../interface/hooks/decode.token";
 
 export const useDecodeToken = (
   initialToken: string | null

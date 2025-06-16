@@ -1,10 +1,6 @@
 import React from "react";
 import { Table } from "../layouts/table";
-import type { FilteredStatistics } from "../../../interface/common/statistics";
-
-interface StudentsByLevelSectionProps {
-  filteredStatistics: FilteredStatistics;
-}
+import { StudentsByLevelSectionProps } from "../../../interface/common/statistics/sections";
 
 export const StudentsByLevelSection: React.FC<StudentsByLevelSectionProps> =
   React.memo(({ filteredStatistics }) => {

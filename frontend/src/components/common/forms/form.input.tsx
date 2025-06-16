@@ -1,5 +1,5 @@
 import React from "react";
-import type FormInputProps from "../../../interface/common/input.field";
+import type FormInputProps from "../../../interface/common/input-field/input.field";
 
 export const FormInput: React.FC<FormInputProps> = ({
   id,
@@ -12,6 +12,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   required,
   options,
   accept,
+  autocomplete,
 }) => (
   <div>
     <label htmlFor={id || name}>{label}</label>
@@ -40,6 +41,7 @@ export const FormInput: React.FC<FormInputProps> = ({
         placeholder={placeholder}
         required={required}
         accept={accept}
+        autoComplete={autocomplete}
       />
     )}
   </div>

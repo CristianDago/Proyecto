@@ -32,6 +32,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         onChange={(
           e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
         ) => setEmail(e.target.value)}
+        autocomplete="username"
       />
 
       <FormInput
@@ -43,10 +44,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         onChange={(
           e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
         ) => setPassword(e.target.value)}
+        autocomplete="current-password"
       />
 
       <button className={css.loginButton} disabled={isLoading}>
-        {isLoading ? "Cargando..." : "Entrar"}{" "}
+        {isLoading ? "Cargando..." : "Entrar"}
       </button>
     </form>
   );

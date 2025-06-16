@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import css from "../../assets/styles/components/student.table.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleRight, faCircleLeft } from "@fortawesome/free-solid-svg-icons";
-import { StudentTableProps } from "../../interface/common/statistics";
+import { StudentTableProps } from "../../interface/common/statistics/statistics";
 import Constants from "../../utils/constants";
 
 export const StudentTable: React.FC<StudentTableProps> = ({

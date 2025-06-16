@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useStudentsList } from "../hooks/use.students.list";
 import { calculateStatistics } from "../components/statistics/statistics.filters";
-import { Source, School, Course } from "../interface/student/student";
+import { Source, School, Course } from "../interface/common/enums/enums";
 import { Grid } from "../components/common/grid/grid";
 import { StatisticsFilterControls } from "../components/statistics/filters/statistics.filter.controls";
 import { GeneralStudentStatsSection } from "../components/statistics/sections/general.student.stats.section";
